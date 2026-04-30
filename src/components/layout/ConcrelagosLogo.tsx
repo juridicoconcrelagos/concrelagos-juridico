@@ -2,7 +2,7 @@ export const BRAND_GOLD = '#B47A18';
 export const BRAND_GOLD_LIGHT = '#CC8E20';
 export const BRAND_GOLD_DARK = '#8A5C10';
 
-function sunPath(cx: number, cy: number, outerR: number, innerR: number, n = 8): string {
+function sunPath(cx: number, cy: number, outerR: number, innerR: number, n = 12): string {
   return Array.from({ length: n * 2 }, (_, i) => {
     const angle = (i * Math.PI / n) - Math.PI / 2;
     const r = i % 2 === 0 ? outerR : innerR;
@@ -18,7 +18,7 @@ export function SunIcon({ size = 36, color = BRAND_GOLD }: SunIconProps) {
   const c = size / 2;
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} fill="none">
-      <path d={sunPath(c, c, size * 0.46, size * 0.24, 8)} fill={color} />
+      <path d={sunPath(c, c, size * 0.48, size * 0.26, 12)} fill={color} />
     </svg>
   );
 }
@@ -27,51 +27,55 @@ interface LogoProps {
   collapsed?: boolean;
   subtitle?: string;
   dark?: boolean;
+  width?: number;
 }
 
-export default function ConcrelagosLogo({ collapsed = false, subtitle = 'Jurídico Trabalhista', dark = true }: LogoProps) {
-  const textColor = dark ? '#FFFFFF' : '#2C363B';
-  const subColor = dark ? 'rgba(255,255,255,0.55)' : '#6B7B82';
+export default function ConcrelagosLogo({ collapsed = false, subtitle, dark = true, width = 200 }: LogoProps) {
+  const textColor = dark ? '#FFFFFF' : '#3D4449';
+  const subTextColor = dark ? 'rgba(255,255,255,0.6)' : '#3D4449';
+  const subtitleColor = dark ? 'rgba(255,255,255,0.55)' : '#6B7B82';
 
   if (collapsed) {
     return <SunIcon size={32} />;
   }
 
-  // SVG canvas: 244 × 62
-  // CONCRELAG (9 chars ~190u at fs38) | sun center 197 | S at 218 | total ~240
-  const SUN_CX = 195, SUN_CY = 22;
-  const OUT_R = 20, IN_R = 9;
+  // ViewBox: 252 wide × 60 tall
+  // CONCRELAG at fs=36 bold-condensed ~190u | sun cx=195 r=20 | S at x=217
+  const VW = 252, VH = 60;
+  const SUN_CX = 194, SUN_CY = 21;
+  const OUT_R = 20, IN_R = 10;
+  const height = Math.round(width * VH / VW);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-start">
       <svg
-        viewBox="0 0 244 62"
-        width="200"
-        height="51"
+        viewBox={`0 0 ${VW} ${VH}`}
+        width={width}
+        height={height}
         style={{ display: 'block', overflow: 'visible' }}
       >
         {/* CONCRELAG */}
         <text
-          x="0" y="42"
+          x="0" y="40"
           fontFamily="'DM Sans', system-ui, sans-serif"
-          fontWeight="800"
-          fontSize="38"
-          letterSpacing="-0.5"
+          fontWeight="900"
+          fontSize="36"
+          letterSpacing="-1"
           fill={textColor}
         >
           CONCRELAG
         </text>
 
         {/* Sol */}
-        <path d={sunPath(SUN_CX, SUN_CY, OUT_R, IN_R, 8)} fill={BRAND_GOLD} />
+        <path d={sunPath(SUN_CX, SUN_CY, OUT_R, IN_R, 12)} fill={BRAND_GOLD} />
 
         {/* S */}
         <text
-          x="217" y="42"
+          x="216" y="40"
           fontFamily="'DM Sans', system-ui, sans-serif"
-          fontWeight="800"
-          fontSize="38"
-          letterSpacing="-0.5"
+          fontWeight="900"
+          fontSize="36"
+          letterSpacing="-1"
           fill={textColor}
         >
           S
@@ -79,12 +83,12 @@ export default function ConcrelagosLogo({ collapsed = false, subtitle = 'Jurídi
 
         {/* CONCRETO */}
         <text
-          x="1" y="58"
+          x="1" y="55"
           fontFamily="'DM Sans', system-ui, sans-serif"
-          fontWeight="400"
-          fontSize="10.5"
-          letterSpacing="5.8"
-          fill={subColor}
+          fontWeight="500"
+          fontSize="10"
+          letterSpacing="5.5"
+          fill={subTextColor}
         >
           CONCRETO
         </text>
@@ -92,8 +96,14 @@ export default function ConcrelagosLogo({ collapsed = false, subtitle = 'Jurídi
 
       {subtitle && (
         <p
-          className="font-medium tracking-widest"
-          style={{ color: subColor, fontSize: 10, marginTop: 2, letterSpacing: '0.15em' }}
+          style={{
+            color: subtitleColor,
+            fontSize: 10,
+            marginTop: 3,
+            letterSpacing: '0.18em',
+            fontFamily: "'DM Sans', system-ui, sans-serif",
+            fontWeight: 500,
+          }}
         >
           {subtitle.toUpperCase()}
         </p>
