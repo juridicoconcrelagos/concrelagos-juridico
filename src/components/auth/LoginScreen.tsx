@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Eye, EyeOff, Lock, Mail, AlertCircle } from 'lucide-react';
-import { SunIcon } from '../layout/ConcrelagosLogo';
+import ConcrelagosLogo from '../layout/ConcrelagosLogo';
 import { autenticar, salvarSessao, type Usuario } from '../../data/auth';
 
 interface Props {
@@ -51,21 +51,7 @@ export default function LoginScreen({ onLogin }: Props) {
       <div className="w-full max-w-sm px-4">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div className="mb-3">
-            <SunIcon size={72} color="#B47A18" />
-          </div>
-          <h1
-            className="text-2xl font-black tracking-widest"
-            style={{ letterSpacing: '0.12em', color: '#2C363B', fontFamily: "'Playfair Display', serif" }}
-          >
-            CONCRELAGOS
-          </h1>
-          <p className="text-sm font-semibold tracking-wider mt-0.5" style={{ color: '#B47A18' }}>
-            CONCRETO
-          </p>
-          <p className="text-xs mt-2" style={{ color: '#6B7B82' }}>
-            Sistema Jurídico Trabalhista
-          </p>
+          <ConcrelagosLogo dark={false} subtitle="Sistema Jurídico Trabalhista" />
         </div>
 
         {/* Card */}
