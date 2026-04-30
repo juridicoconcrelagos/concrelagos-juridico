@@ -51,9 +51,14 @@ export default function LoginScreen({ onLogin }: Props) {
       <div className="w-full max-w-sm px-4">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div className="flex justify-center">
-            <ConcrelagosLogo dark={false} width={260} subtitle="Sistema Jurídico Trabalhista" />
-          </div>
+          <img
+            src={`${import.meta.env.BASE_URL}logo-concrelagos.svg`}
+            alt="Concrelagos"
+            style={{ width: 260, marginBottom: 10 }}
+          />
+          <p className="text-xs" style={{ color: '#6B7B82', letterSpacing: '0.15em' }}>
+            SISTEMA JURÍDICO TRABALHISTA
+          </p>
         </div>
 
         {/* Card */}
