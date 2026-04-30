@@ -36,7 +36,7 @@ export default function Sidebar({ activeView, onNavigate }: SidebarProps) {
             <SunIcon size={32} color="#B47A18" />
           </div>
         ) : (
-          <ConcrelagosLogo iconSize={32} />
+          <ConcrelagosLogo dark={true} subtitle="Jurídico Trabalhista" />
         )}
       </div>
 
