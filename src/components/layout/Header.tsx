@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Clock, AlertTriangle, LogOut, User } from 'lucide-react';
+import { Clock, AlertTriangle, LogOut, User, RefreshCw, Table2 } from 'lucide-react';
 
 interface HeaderProps {
   prazosCount: number;
   title: string;
   nomeUsuario?: string;
   onLogout?: () => void;
+  fonte?: 'planilha' | 'demo';
+  erro?: string | null;
+  onAtualizar?: () => void;
 }
 
-export default function Header({ prazosCount, title, nomeUsuario, onLogout }: HeaderProps) {
+export default function Header({ prazosCount, title, nomeUsuario, onLogout, fonte, erro, onAtualizar }: HeaderProps) {
   const [now, setNow] = useState(new Date());
 
   useEffect(() => {
@@ -33,6 +36,22 @@ export default function Header({ prazosCount, title, nomeUsuario, onLogout }: He
       <h1 className="font-semibold text-lg" style={{ color: '#FFFFFF' }}>{title}</h1>
 
       <div className="flex items-center gap-4">
+        {/* Indicador de fonte dos dados */}
+        {fonte && (
+          <div className="flex items-center gap-1.5">
+            <Table2 size={13} style={{ color: fonte === 'planilha' ? '#22C55E' : '#F59E0B' }} />
+            <span className="text-xs" style={{ color: fonte === 'planilha' ? '#22C55E' : '#F59E0B' }}>
+              {fonte === 'planilha' ? 'Planilha' : 'Demo'}
+            </span>
+            {erro && <span className="text-xs text-red-400" title={erro}>⚠</span>}
+            {onAtualizar && (
+              <button onClick={onAtualizar} title="Atualizar dados" className="ml-1 opacity-50 hover:opacity-100 transition-opacity">
+                <RefreshCw size={12} style={{ color: '#FFFFFF' }} />
+              </button>
+            )}
+          </div>
+        )}
+
         {prazosCount > 0 && (
           <div
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg pulse-red"
